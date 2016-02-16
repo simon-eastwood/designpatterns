@@ -1,7 +1,19 @@
 ---
 title: "Form controls"
 ---
+<div class="pl-pattern">
+### Overview
 
+As you customize form controls from this library, be sure they continue to meet the following accessibility requirements:
+
+- All form control tags should have an associated label. The labels for attribute value should match the related input id attribute and should also be unique to the entire page. For example, the input with id="favorite-national-park" will always have a label with for="favorite-national-park". This way screen readers are able to perceive the relevant content.
+- Any additional information — such as required, optional, or example text — should be wrapped within the label tags. For example: `<label for="name">Favorite Pie <span>Optional</span></label>`. This way screen readers know what additional information is related to each field. 
+- Do not replace `<input>` tag-based form controls with styled `<div>` tags, or use JavaScript to create 'fake' form controls. Screen readers have a difficult time reading form controls that are not written in semantic HTML.
+- If you adjust the color scheme of the buttons, ensure a minimum contrast ratio of 4.5:1 (for small text, 3:1 for large) for the default, hover, focus, and selected states of the button. The disabled state may have less contrast to indicate that it is inactive. 
+
+&nbsp;
+
+</div>
 
 <div class="pl-pattern">
 ### Text box
@@ -12,6 +24,10 @@ Users need to input a simple text value.
 #### Description
 Text boxes allow the user to input a simple text value. A text box only allows for a single line of input. 
 
+#### Accessibility
+
+- Avoid placeholder text for accessibility reasons. Most browsers’ default rendering of placeholder text does not provide a high enough contrast ratio. 
+- Avoid breaking numbers with distinct sections (such as phone numbers, Social Security Numbers, or credit card numbers) into separate input fields. For example, use one input for phone number, not three (one for area code, one for local code, and one for number). Each field needs to be labeled for a screen reader and the labels for fields broken into segments are often not meaningful. 
 
 {::nomarkdown}
 <div class="pl-preview">
@@ -45,10 +61,9 @@ Text boxes allow the user to input a simple text value. A text box only allows f
 
 Input masks ensure that the user understands the input format required, in addition to making input less error-prone by potentially restricting the number or types of characters that can be entered.
 
-<span class="text-muted">Example uses https://github.com/RobinHerbots/jquery.inputmask for demo purposes.</span>
-
 {::nomarkdown}
 <div class="pl-preview">
+<div class="text-muted" style="margin: -20px 0 20px;">Example uses https://github.com/RobinHerbots/jquery.inputmask for demo purposes.</div>
 <div class="container-fluid" style="max-width: 400px; margin: 0;">
     <div class="row">
         <form class="form-horizontal col-sm-12" role="form">
@@ -59,15 +74,15 @@ Input masks ensure that the user understands the input format required, in addit
               </div>
           </div>
           <div class="form-group">
-              <label for="im1" class="col-sm-3 control-label">Routing #</label>
+              <label for="im2" class="col-sm-3 control-label">Routing #</label>
               <div class="col-sm-9">
-                  <input type="text" class="form-control" placeholder="PCT/" id="im1" data-inputmask="'mask': '\\PCT/99,999,999', 'placeholder': 'ˍ'">
+                  <input type="text" class="form-control" placeholder="PCT/" id="im2" data-inputmask="'mask': '\\PCT/99,999,999', 'placeholder': 'ˍ'">
               </div>
           </div>
           <div class="form-group">
-              <label for="im1" class="col-sm-3 control-label">Start date</label>
+              <label for="im3" class="col-sm-3 control-label">Start date</label>
               <div class="col-sm-9">
-                  <input type="text" class="form-control" id="im1" data-inputmask="'mask': 'm/d/y', 'placeholder': 'mm/dd/yyyy'">
+                  <input type="text" class="form-control" id="im3" data-inputmask="'mask': 'm/d/y', 'placeholder': 'mm/dd/yyyy'">
               </div>
           </div>
         </form>
@@ -81,7 +96,6 @@ Input masks ensure that the user understands the input format required, in addit
 <input type="text" class="form-control" id="im1" data-inputmask="'mask': 'PCT/99,999,999'">
 <input type="text" class="form-control" id="im1" data-inputmask="'alias': 'date'">
 {% endhighlight %}
-
 
 </div>
 
@@ -150,62 +164,80 @@ Users must choose between two or more mutually exclusive options.
 - Align in shorter columns if there are many options
 - Ensure there is adequate spacing between adjacent fields and radio/checkbox groups
 
+#### Accessibility
+- Group related radio buttons together with `<fieldset>` and describe the group with `<legend>`.
+- Each radio button should have a `<label>`. Associate the two by matching the `<label>’s` for attribute to the `<input>’s` id attribute.
+
 #### Vertical
 
 {::nomarkdown}
 <div class="pl-preview">
-<div class="radio">
-    <label><input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>Checked</label>
-</div>
-<div class="radio">
-    <label><input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">Normal</label>
-</div>
-<div class="radio">
-    <label><input type="radio" name="optionsRadios" id="optionsRadios3" value="option3" disabled>Disabled</label>
-</div>
-<div class="radio">
-  <label><input type="radio" name="optionsRadios" id="optionsRadios4" value="option4">Extended <div class="text-muted" style="width: 300px;">This option has some useful help text associated with it that elaborates on the state or purpose.</div></label>
-</div>
+  <fieldset style="width: 300px;">
+    <legend>Radio button states</legend>
+    <div class="radio">
+        <label><input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>Checked</label>
+    </div>
+    <div class="radio">
+        <label><input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">Normal</label>
+    </div>
+    <div class="radio">
+        <label><input type="radio" name="optionsRadios" id="optionsRadios3" value="option3" disabled>Disabled</label>
+    </div>
+    <div class="radio">
+      <label><input type="radio" name="optionsRadios" id="optionsRadios4" value="option4">Extended <span class="help-block">This option has some useful help text associated with it that elaborates on the state or purpose.</span></label>
+    </div>
+  </fieldset>
 </div>
 {:/nomarkdown}
 
 {% highlight html %}
-<div class="radio">
-    <label><input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>Checked</label>
-</div>
-<div class="radio">
-  <label>
-    <input type="radio" name="optionsRadios" id="optionsRadios4" value="option4">Extended 
-    <div class="text-muted">This option has some useful help text associated with it that elaborates on the state or purpose.</div>
-  </label>
-</div>
+<fieldset>
+  <legend>Radio button states</legend>
+  <div class="radio">
+      <label><input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>Checked</label>
+  </div>
+  <div class="radio">
+      <label><input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">Normal</label>
+  </div>
+  <div class="radio">
+      <label><input type="radio" name="optionsRadios" id="optionsRadios3" value="option3" disabled>Disabled</label>
+  </div>
+  <div class="radio">
+    <label><input type="radio" name="optionsRadios" id="optionsRadios4" value="option4">Extended <span class="help-block">This option has some useful help text associated with it that elaborates on the state or purpose.</span></label>
+  </div>
+</fieldset>
 {% endhighlight %}
 
 #### Inline
 
 {::nomarkdown}
 <div class="pl-preview">
-<label class="radio-inline">
-  <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1" checked> Checked
-</label>
-<label class="radio-inline">
-  <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2"> Normal
-</label>
-<label class="radio-inline">
-  <input type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3" disabled> Disabled
-</label>
-
+  <fieldset>
+    <legend class="sr-only">Inline radio buttons example</legend>
+    <label class="radio-inline">
+      <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1" checked> Checked
+    </label>
+    <label class="radio-inline">
+      <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2"> Normal
+    </label>
+    <label class="radio-inline">
+      <input type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3" disabled> Disabled
+    </label>
+  </fieldset>
 </div>
 {:/nomarkdown}
 
 
 {% highlight html %}
-<label class="radio-inline">
-  <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1" checked> Checked
-</label>
-<label class="radio-inline">
-  <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2"> Normal
-</label>
+<fieldset>
+  <legend>Inline radio buttons example</legend>
+  <label class="radio-inline">
+    <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1" checked> Checked
+  </label>
+  <label class="radio-inline">
+    <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2"> Normal
+  </label>
+</fieldset>
 {% endhighlight %}
 
 </div>
@@ -228,60 +260,79 @@ Users need to specify which option(s) from a set are applicable/valid/true based
 - The selected state of a checkbox should ideally indicate something 'positive' and may require the rephrasing of the label (e.g., `Send me weekly reminders`, vs. `Do not send me weekly reminders`)
 - Ensure there is adequate spacing between adjacent fields and radio/checkbox groups
 
+#### Accessibility
+- Surround a related set of checkboxes with a `<fieldset>`. The `<legend>` provides context for the grouping. Do not use fieldset and legend for a single check.
+- Each input should have a semantic `id` attribute, and its corresponding label should have the same value in it’s `for` attribute.
+
 #### Vertical
 
 {::nomarkdown}
 <div class="pl-preview">
-<div class="checkbox">
-  <label><input type="checkbox" name="optionsCheckboxes" id="optionsCheckboxes1" value="option1" checked>Checked</label>
-</div>
-<div class="checkbox">
-  <label><input type="checkbox" name="optionsCheckboxes" id="optionsCheckboxes2" value="option2">Normal</label>
-</div>
-<div class="checkbox">
-  <label><input type="checkbox" name="optionsCheckboxes" id="optionsCheckboxes3" value="option3" disabled>Disabled</label>
-</div>
-<div class="checkbox">
-  <label><input type="checkbox" name="optionsCheckboxes" id="optionsCheckboxes4" value="option4">Extended <div class="text-muted" style="width: 300px;">This option has some useful help text associated with it that elaborates on the state or purpose.</div></label>
-</div>
+  <fieldset style="width: 300px;">
+    <legend>Checkbox states</legend>
+    <div class="checkbox">
+      <label><input type="checkbox" name="optionsCheckboxes" id="optionsCheckboxes1" value="option1" checked>Checked</label>
+    </div>
+    <div class="checkbox">
+      <label><input type="checkbox" name="optionsCheckboxes" id="optionsCheckboxes2" value="option2">Normal</label>
+    </div>
+    <div class="checkbox">
+      <label><input type="checkbox" name="optionsCheckboxes" id="optionsCheckboxes3" value="option3" disabled>Disabled</label>
+    </div>
+    <div class="checkbox">
+      <label><input type="checkbox" name="optionsCheckboxes" id="optionsCheckboxes4" value="option4">Extended <span class="help-block">This option has some useful help text associated with it that elaborates on the state or purpose.</span></label>
+    </div>
+  </fieldset>
 </div>
 {:/nomarkdown}
 
 {% highlight html %}
-<div class="checkbox">
-  <label><input type="checkbox" name="optionsCheckboxes" id="optionsCheckboxes1" value="option1" checked>Checked</label>
-</div>
-<div class="checkbox">
-  <label>
-    <input type="checkbox" name="optionsCheckboxes" id="optionsCheckboxes4" value="option4">
-    Extended 
-    <div class="text-muted">This option has some useful help text associated with it that elaborates on the state or purpose.</div>
-  </label>
-</div>
+<fieldset>
+  <legend>Checkbox states</legend>
+  <div class="checkbox">
+    <label><input type="checkbox" name="optionsCheckboxes" id="optionsCheckboxes1" value="option1" checked>Checked</label>
+  </div>
+  <div class="checkbox">
+    <label><input type="checkbox" name="optionsCheckboxes" id="optionsCheckboxes2" value="option2">Normal</label>
+  </div>
+  <div class="checkbox">
+    <label><input type="checkbox" name="optionsCheckboxes" id="optionsCheckboxes3" value="option3" disabled>Disabled</label>
+  </div>
+  <div class="checkbox">
+    <label><input type="checkbox" name="optionsCheckboxes" id="optionsCheckboxes4" value="option4">Extended <span class="help-block">This option has some useful help text associated with it that elaborates on the state or purpose.</span></label>
+  </div>
+</fieldset>
 {% endhighlight %}
 
 #### Inline
 
 {::nomarkdown}
 <div class="pl-preview">
-<label class="checkbox-inline">
-  <input type="checkbox" id="inlineCheckbox1" value="option1" checked> Checked
-</label> <label class="checkbox-inline">
-  <input type="checkbox" id="inlineCheckbox2" value="option2"> Normal
-</label> <label class="checkbox-inline">
-  <input type="checkbox" id="inlineCheckbox3" value="option3" disabled> Disabled
-</label>
+  <fieldset>
+    <legend class="sr-only">Inline checkboxes example</legend>
+    <label class="checkbox-inline">
+      <input type="checkbox" id="inlineCheckbox1" value="option1" checked> Checked
+    </label> <label class="checkbox-inline">
+      <input type="checkbox" id="inlineCheckbox2" value="option2"> Normal
+    </label> <label class="checkbox-inline">
+      <input type="checkbox" id="inlineCheckbox3" value="option3" disabled> Disabled
+    </label>
+  </fieldset>
 </div>
+
 {:/nomarkdown}
 
 
 {% highlight html %}
-<label class="checkbox-inline">
-  <input type="checkbox" id="inlineCheckbox1" value="option1" checked> Checked
-</label> 
-<label class="checkbox-inline">
-  <input type="checkbox" id="inlineCheckbox2" value="option2"> Normal
-</label>
+<fieldset>
+  <legend>Inline checkboxes example</legend>
+  <label class="checkbox-inline">
+    <input type="checkbox" id="inlineCheckbox1" value="option1" checked> Checked
+  </label> 
+  <label class="checkbox-inline">
+    <input type="checkbox" id="inlineCheckbox2" value="option2"> Normal
+  </label>
+</fieldset>
 {% endhighlight %}
 
 </div>
@@ -364,10 +415,14 @@ The user needs to choose an option from a predefined set.
 - If there are 5 or more options, the list should allow for filtering via a text field
 - For empty selects, use a placeholder in the format of `Select a [type]...` or `Select...`
 
-<span class="text-muted">Example uses https://github.com/ivaynberg/select2 for demo purposes.</span>
+#### Accessibility
+
+- Make sure your dropdown has a label. Don’t replace it with the default menu option (for example, removing the “State” label and just having the dropdown read “Select a state” by default).
+- Don’t use JavaScript to automatically submit the form (or do anything else) when an option is selected. Auto-submission disrupts screen readers because they select each option as they read them. 
 
 {::nomarkdown}
 <div class="pl-preview">
+<div class="text-muted" style="margin: -20px 0 20px;">Example uses https://github.com/ivaynberg/select2 for demo purposes.</div>
 <div class="container-fluid" style="max-width: 400px; margin: 0;">
     <div class="row">
         <form role="form" class="col-sm-12 form-horizontal">
@@ -559,10 +614,17 @@ Date pickers can provide:
 - Highlighting/disabling of days/rows/columns (e.g., disable weekends or highlight bi-week)
 - Ability to type date as well as use a calendar dropdown
 
-<span class="text-muted">Example uses jQuery UI for demo purposes.</span>
+#### Accessibility
+
+- These text fields should follow the <a href="#text-box">accessibility guidelines for all text inputs</a>.
+- Do not use JavaScript to auto advance the focus from one field to the next. This makes it difficult for keyboard-only users to navigate and correct mistakes.
+
+
 
 {::nomarkdown}
 <div class="pl-preview">
+<div class="text-muted" style="margin: -20px 0 20px;">Example uses jQuery UI for demo purposes.</div>
+
 <div class="container-fluid" style="max-width: 400px; margin: 0;">
     <div class="row">
         <form role="form" class="col-sm-12 form-horizontal">
@@ -574,16 +636,18 @@ Date pickers can provide:
                 </div>
             </div>
             <div class="form-group">
-                <label for="dp2" class="col-sm-3 control-label">Range</label>
+                <span class="col-sm-3 control-label" style="font-weight: 600;">Range</span>
                 <div class="col-sm-9">
                     <div class="row">
                         <div class="col-sm-6">
+                            <label for="txt-fromDate" class="sr-only">From</label>
                             <span class="input-icon icon icon-calendar-o"></span>
-                            <input id="dp2" placeholder="From" data-inputmask="'mask': 'm/d/y', 'placeholder': 'mm/dd/yyyy'" type="text" class="datepicker form-control" >
+                            <input id="txt-fromDate" placeholder="From" data-inputmask="'mask': 'm/d/y', 'placeholder': 'mm/dd/yyyy'" type="text" class="datepicker form-control">
                         </div>
                         <div class="col-sm-6">
+                            <label for="txt-toDate" class="sr-only">To</label>
                             <span class="input-icon icon icon-calendar-o"></span>
-                            <input id="dp3" placeholder="To" data-inputmask="'mask': 'm/d/y', 'placeholder': 'mm/dd/yyyy'" type="text" class="datepicker form-control" >
+                            <input id="txt-toDate" placeholder="To" data-inputmask="'mask': 'm/d/y', 'placeholder': 'mm/dd/yyyy'" type="text" class="datepicker form-control">
                         </div>
                     </div>
                 </div>
@@ -635,40 +699,41 @@ Sliders can provide:
 - Step increments
 - Multi-handle range
 
-<span class="text-muted">Example uses https://github.com/leongersen/noUiSlider for demo purposes.</span>
+
 
 {::nomarkdown}
 <div class="pl-preview">
+<div class="text-muted" style="margin: -20px 0 20px;">Example uses https://github.com/leongersen/noUiSlider for demo purposes.</div>
 <div class="container-fluid" style="max-width: 400px; margin: 0;">
     <div class="row">
         <form role="form" class="col-sm-12 form-horizontal">
             <div class="form-group">
-                <label for="sl1" class="col-sm-3 control-label">Basic</label>
+                <span class="col-sm-3 control-label">Basic</span>
                 <div class="col-sm-9">
                     <div id="sl1" data-nouislider data-min="0" data-max="50" data-step="10" data-start="10"></div>
                 </div>
             </div>
             <div class="form-group">
-                <label for="sl2" class="col-sm-3 control-label">Ticks</label>
+                <span class="col-sm-3 control-label">Ticks</span>
                 <div class="col-sm-9">
                     <div id="sl2" data-nouislider data-pips="true" data-min="0" data-max="50" data-step="10" data-start="20"></div>
                 </div>
             </div>
             <div class="form-group">
-                <label for="sl3" class="col-sm-3 control-label">Range</label>
+                <span class="col-sm-3 control-label">Range</span>
                 <div class="col-sm-9">
                     <div id="sl3" data-nouislider data-pips="true" data-min="0" data-max="50" data-step="10" data-start="0" data-start-b="30"></div>
                 </div>
             </div>
             <div class="form-group">
-                <label for="sl5" class="col-sm-3 control-label">Value</label>
+                <span class="col-sm-3 control-label">Value</span>
                 <div class="col-sm-9">
                     <strong style="display: block; margin-bottom: -5px; margin-top: 7px;" id="sl5-lower"></strong>
                     <div id="sl5" data-nouislider data-link-lower="#sl5-lower" data-min="0" data-max="50" data-step="10" data-start="50"></div>
                 </div>
             </div>
             <div class="form-group">
-                <label for="sl6" class="col-sm-3 control-label">Values</label>
+                <span class="col-sm-3 control-label">Values</span>
                 <div class="col-sm-9">
                     <div class="clearfix" style="margin-bottom: -5px; margin-top: 7px;">
                       <strong style="" id="sl6-lower"></strong> to <strong style="" id="sl6-upper"></strong>
@@ -677,7 +742,7 @@ Sliders can provide:
                 </div>
             </div>
             <div class="form-group">
-                <label for="sl7" class="col-sm-3 control-label">Disabled</label>
+                <span class="col-sm-3 control-label">Disabled</span>
                 <div class="col-sm-9">
                     <div id="sl7" data-nouislider disabled data-min="0" data-max="50" data-step="10" data-start="30"></div>
                 </div>
@@ -736,7 +801,8 @@ The rich text editor allows for text input with additional formatting and inline
             <button type="button" data-toggle="tooltip" data-placement="top" title="Insert image" class="btn btn-hover btn-icon-only"><i class="icon icon-image"></i><span class="sr-only">Insert image</span></button>
         </div>
     </div>
-    <textarea name="" id="" cols="30" rows="10" class="form-control" style="border-top-left-radius: 0; border-top-right-radius: 0;" placeholder="Enter note here..."></textarea>
+    <label for="txt-note" class="sr-only">Note</label>
+    <textarea id="txt-note" cols="30" rows="10" class="form-control" style="border-top-left-radius: 0; border-top-right-radius: 0;" placeholder="Enter note here..."></textarea>
 </div>
 </div>
 {:/nomarkdown}
@@ -772,7 +838,7 @@ The rich text editor allows for text input with additional formatting and inline
             <button type="button" data-toggle="tooltip" data-placement="top" title="Insert image" class="btn btn-hover btn-icon-only"><i class="icon icon-image"></i><span class="sr-only">Insert image</span></button>
         </div>
     </div>
-    <textarea name="" id="" cols="30" rows="10" class="form-control" style="border-top-left-radius: 0; border-top-right-radius: 0;" placeholder="Enter note here..."></textarea>
+    <textarea id="" cols="30" rows="10" class="form-control" style="border-top-left-radius: 0; border-top-right-radius: 0;" placeholder="Enter note here..."></textarea>
 </div>
 {% endhighlight %}
 </div>
